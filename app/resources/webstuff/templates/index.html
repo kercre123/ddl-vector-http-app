@@ -1,0 +1,337 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="/css/dropdown.css">
+  </head>
+<style></style>
+<body>
+<h1>Vector API</h1>
+<hr>
+<h2>Status</h2>
+<div id="root"></div>
+<button onclick="getVicstatus()">Get Status</button>
+<button onClick="window.location.reload();">Clear (refresh page)</button>
+<hr>
+<h2>Set Volume</h2>
+<div class="dropdown">
+  <button class="dropbtn">Hover Over This</button>
+  <div class="dropdown-content">
+  <ul>
+<li><form method="post" action="/api/volume/0" target="hiddenFrame">
+  <button type="submit">Low</button>
+</form></li>
+<li><form method="post" action="/api/volume/1" target="hiddenFrame">
+  <button type="submit">Medium Low</button>
+</form></li>
+<li><form method="post" action="/api/volume/2" target="hiddenFrame">
+  <button type="submit">Medium</button>
+</form></li>
+<li><form method="post" action="/api/volume/3" target="hiddenFrame">
+  <button type="submit">Medium High</button>
+</form></li>
+<li><form method="post" action="/api/volume/4" target="hiddenFrame"> 
+  <button type="submit">High</button>
+</form></li>
+  </ul>
+  </div>
+</div>
+<hr>
+<h2>Set Locale</h2>
+<div class="dropdown">
+  <button class="dropbtn">Hover Over This</button>
+  <div class="dropdown-content">
+  <ul>
+<li><form method="post" action="/api/locale/enUS" target="hiddenFrame"> 
+  <button type="submit">English (US)</button>
+</form></li>
+<li><form method="post" action="/api/locale/deDE" target="hiddenFrame"> 
+  <button type="submit">German</button>
+</form></li>
+<li><form method="post" action="/api/locale/frFR" target="hiddenFrame"> 
+  <button type="submit">French</button>
+</form></li>
+<li><form method="post" action="/api/locale/jaJP" target="hiddenFrame"> 
+  <button type="submit">Japanese</button>
+</form></li>
+  </ul>
+  </div>
+</div>
+<hr>
+<h2>Set Button</h2>
+<form method="post" action="/api/settings/button/alexa" target="hiddenFrame"> 
+  <button type="submit">Alexa</button>
+</form>
+<form method="post" action="/api/settings/button/heyvector" target="hiddenFrame">
+  <input type="hidden"/> 
+  <button type="submit">Hey Vector</button>
+</form>
+<hr>
+<h2>Set Temp</h2>
+<form method="post" action="/api/settings/temp/f" target="hiddenFrame">
+  <button type="submit">Fahrenheit</button>
+</form>
+<form method="post" action="/api/settings/temp/c" target="hiddenFrame">
+  <button type="submit">Celcius</button>
+</form>
+<hr>
+<h2>Set Units</h2>
+<form method="post" action="/api/settings/units/metric" target="hiddenFrame"> 
+  <button type="submit">Metric</button>
+</form>
+<form method="post" action="/api/settings/units/imperial" target="hiddenFrame"> 
+  <button type="submit">Imperial</button>
+</form>
+<hr>
+<h2>Set Time</h2>
+<form method="post" action="/api/settings/time/24" target="hiddenFrame"> 
+  <button type="submit">24 Hour</button>
+</form>
+<form method="post" action="/api/settings/time/12" target="hiddenFrame"> 
+  <button type="submit">12 Hour</button>
+</form>
+<hr>
+<h2>Set Location</h2>
+<form method="POST" action="/api/settings/location" target="hiddenFrame">
+    <input name="text">
+    <input type="submit" placeholder="Put text here">
+    <small>Location (ex. San Francisco, California, United States of America)</small>
+</form>
+<form method="POST" action="/api/settings/timezone" target="hiddenFrame">
+    <input name="text">
+    <input type="submit" placeholder="Put text here">
+    <small>Time Zone (ex. America/Los_Angeles)</small>
+</form>
+<hr>
+</h2>
+<h2>Set Eye Color</h2>
+
+<div class="dropdown">
+  <button class="dropbtn">Hover Over This</button>
+  <div class="dropdown-content">
+  <ul>
+<li><form method="post" action="/api/settings/eyecolor/0" target="hiddenFrame"> 
+  <button type="submit">Teal</button>
+</form></li>
+<li><form method="post" action="/api/settings/eyecolor/1" target="hiddenFrame"> 
+  <button type="submit">Orange</button>
+</form></li>
+<li><form method="post" action="/api/settings/eyecolor/2" target="hiddenFrame"> 
+  <button type="submit">Yellow</button>
+</form></li>
+<li><form method="post" action="/api/settings/eyecolor/3" target="hiddenFrame"> 
+  <button type="submit">Lime Green</button>
+</form></li>
+<li><form method="post" action="/api/settings/eyecolor/4" target="hiddenFrame"> 
+  <button type="submit">Azure Blue</button>
+</form></li>
+<li><form method="post" action="/api/settings/eyecolor/5" target="hiddenFrame"> 
+  <button type="submit">Purple</button>
+</form></li>
+<li><form method="post" action="/api/settings/eyecolor/6" target="hiddenFrame"> 
+  <button type="submit">Matrix Green/White</button>
+</form></li>
+  </ul>
+  </div>
+</div>
+<hr>
+<h2>TTS</h2>
+<form method="POST" action="/api/say/" target="hiddenFrame">
+    <input name="text">
+    <input type="submit" placeholder="Put text here">
+</form>
+<hr>
+<h2>Actions</h2>
+<form method="POST" action="/api/intents/explore_start" target="hiddenFrame">
+  <button type="submit">Explore Start</button>
+</form>
+<form method="POST" action="/api/intents/listen_beat" target="hiddenFrame">
+  <button type="submit">Listen for Beat</button>
+</form>
+<form method="POST" action="/api/intents/sleep" target="hiddenFrame">
+  <button type="submit">Go to Sleep</button>
+</form>
+<form method="POST" action="/api/intents/goodnight" target="hiddenFrame">
+  <button type="submit">Goodnight</button>
+</form>
+<hr>
+<h2>BlackJack</h2>
+<form method="POST" action="/api/intents/play_blackjack" target="hiddenFrame">
+  <button type="submit">Play Blackjack</button>
+</form>
+<form method="POST" action="/api/intents/blackjack_hit" target="hiddenFrame">
+  <button type="submit">Hit</button>
+</form>
+<form method="POST" action="/api/intents/blackjack_stand" target="hiddenFrame">
+  <button type="submit">Stand</button>
+</form>
+<form method="POST" action="/api/intents/blackjack_playagain" target="hiddenFrame">
+  <button type="submit">Play Again</button>
+</form>
+<form method="POST" action="/api/intents/negative" target="hiddenFrame">
+  <button type="submit">Don't Play Again</button>
+</form>
+<hr>
+<h2>All App Intents</h2>
+<div class="dropdown">
+  <button class="dropbtn">Hover Over This</button>
+  <div class="dropdown-content">
+<!--Listing Manually.-->
+  <ul>
+<li><form method="post" action="/api/intents/signout_alexa" target="hiddenFrame"> 
+  <button type="submit">Signout Alexa</button>
+</form></li>
+<li><form method="post" action="/api/intents/signin_alexa" target="hiddenFrame"> 
+  <button type="submit">Signin Alexa</button>
+</form></li>
+<li><form method="post" action="/api/intents/do_trick" target="hiddenFrame"> 
+  <button type="submit">Do Trick</button>
+</form></li>
+<li><form method="post" action="/api/intents/play_game" target="hiddenFrame"> 
+  <button type="submit">Play Game</button>
+</form></li>
+<li><form method="post" action="/api/intents/play_blackjack" target="hiddenFrame"> 
+  <button type="submit">Play BlackJack</button>
+</form></li>
+<li><form method="post" action="/api/intents/fistbump" target="hiddenFrame"> 
+  <button type="submit">Fistbump</button>
+</form></li>
+<li><form method="post" action="/api/intents/pickup_cube" target="hiddenFrame"> 
+  <button type="submit">Pickup Cube</button>
+</form></li>
+<li><form method="post" action="/api/intents/pop_a_wheelie" target="hiddenFrame"> 
+  <button type="submit">Pop A Wheelie</button>
+</form></li>
+<li><form method="post" action="/api/intents/roll_cube" target="hiddenFrame"> 
+  <button type="submit">Roll Cube</button>
+</form></li>
+<li><form method="post" action="/api/intents/be_quiet" target="hiddenFrame"> 
+  <button type="submit">Be Quiet</button>
+</form></li>
+<li><form method="post" action="/api/intents/shutup" target="hiddenFrame"> 
+  <button type="submit">Shut Up</button>
+</form></li>
+<li><form method="post" action="/api/intents/come_here" target="hiddenFrame"> 
+  <button type="submit">Come Here</button>
+</form></li>
+<li><form method="post" action="/api/intents/listen_beat" target="hiddenFrame"> 
+  <button type="submit">Listen Beat</button>
+</form></li>
+<li><form method="post" action="/api/intents/affirmative" target="hiddenFrame"> 
+  <button type="submit">Affirmative</button>
+</form></li>
+<li><form method="post" action="/api/intents/negative" target="hiddenFrame"> 
+  <button type="submit">Negative</button>
+</form></li>
+<li><form method="post" action="/api/intents/praise" target="hiddenFrame"> 
+  <button type="submit">Praise</button>
+</form></li>
+<li><form method="post" action="/api/intents/apology" target="hiddenFrame"> 
+  <button type="submit">Apology</button>
+</form></li>
+<li><form method="post" action="/api/intents/scold" target="hiddenFrame"> 
+  <button type="submit">Scold</button>
+</form></li>
+<li><form method="post" action="/api/intents/love" target="hiddenFrame"> 
+  <button type="submit">Love</button>
+</form></li>
+<li><form method="post" action="/api/intents/abuse" target="hiddenFrame"> 
+  <button type="submit">Abuse</button>
+</form></li>
+<li><form method="post" action="/api/intents/goodbye" target="hiddenFrame"> 
+  <button type="submit">Goodbye</button>
+</form></li>
+<li><form method="post" action="/api/intents/good_morning" target="hiddenFrame"> 
+  <button type="submit">Good Morning</button>
+</form></li>
+<li><form method="post" action="/api/intents/goodnight" target="hiddenFrame"> 
+  <button type="submit">Goodnight</button>
+</form></li>
+<li><form method="post" action="/api/intents/check_timer" target="hiddenFrame"> 
+  <button type="submit">Check Timer</button>
+</form></li>
+<li><form method="post" action="/api/intents/show_time" target="hiddenFrame"> 
+  <button type="submit">Show Time</button>
+</form></li>
+<li><form method="post" action="/api/intents/take_photo" target="hiddenFrame"> 
+  <button type="submit">Take Photo</button>
+</form></li>
+<li><form method="post" action="/api/intents/go_home" target="hiddenFrame"> 
+  <button type="submit">Go Home</button>
+</form></li>
+<li><form method="post" action="/api/intents/sleep" target="hiddenFrame"> 
+  <button type="submit">Sleep</button>
+</form></li>
+<li><form method="post" action="/api/intents/explore_start" target="hiddenFrame"> 
+  <button type="submit">Explore Start</button>
+</form></li>
+<li><form method="post" action="/api/intents/knowledge_question" target="hiddenFrame"> 
+  <button type="submit">KG Question</button>
+</form></li>
+<li><form method="post" action="/api/intents/knowledge_unknown" target="hiddenFrame"> 
+  <button type="submit">KG Unknown</button>
+</form></li>
+<li><form method="post" action="/api/intents/blackjack_hit" target="hiddenFrame"> 
+  <button type="submit">Blackjack Hit</button>
+</form></li>
+<li><form method="post" action="/api/intents/blackjack_stand" target="hiddenFrame"> 
+  <button type="submit">Blackjack Stand</button>
+</form></li>
+<li><form method="post" action="/api/intents/blackjack_playagain" target="hiddenFrame"> 
+  <button type="submit">Play Again</button>
+</form></li>
+<li><form method="post" action="/api/intents/look_at_me" target="hiddenFrame"> 
+  <button type="submit">Look At Me</button>
+</form></li>
+<li><form method="post" action="/api/intents/find_cube" target="hiddenFrame"> 
+  <button type="submit">Find Cube</button>
+</form></li>
+<li><form method="post" action="/api/intents/what_is_name" target="hiddenFrame"> 
+  <button type="submit">What Is Name</button>
+</form></li>
+<li><form method="post" action="/api/intents/volume_up" target="hiddenFrame"> 
+  <button type="submit">Volume Up</button>
+</form></li>
+<li><form method="post" action="/api/intents/volume_down" target="hiddenFrame"> 
+  <button type="submit">Volume Down</button>
+</form></li>
+<li><form method="post" action="/api/intents/move_backwards" target="hiddenFrame"> 
+  <button type="submit">Move Backwards</button>
+</form></li>
+<li><form method="post" action="/api/intents/turn_left" target="hiddenFrame"> 
+  <button type="submit">Turn Left</button>
+</form></li>
+<li><form method="post" action="/api/intents/turn_right" target="hiddenFrame"> 
+  <button type="submit">Turn Right</button>
+</form></li>
+<li><form method="post" action="/api/intents/turn_around" target="hiddenFrame"> 
+  <button type="submit">Turn Around</button>
+</form></li>
+<li><form method="post" action="/api/intents/happy_new_year" target="hiddenFrame"> 
+  <button type="submit">Happy New Year</button>
+</form></li>
+<li><form method="post" action="/api/intents/happy_holidays" target="hiddenFrame"> 
+  <button type="submit">Happy Holidays</button>
+</form></li>
+<li><form method="post" action="/api/intents/robot_age" target="hiddenFrame"> 
+  <button type="submit">Robot Age</button>
+</form></li>
+<li><form method="post" action="/api/intents/eye_color" target="hiddenFrame"> 
+  <button type="submit">Eye Color</button>
+</form></li>
+  </ul>
+  </div>
+</div>
+<hr>
+<h2>Intents with Param (needs SDK mods)</h2>
+<form method="POST" action="/api/meetvictor/" target="hiddenFrame">
+    <input name="text">
+    <input type="submit" placeholder="Put text here">
+    <small>Meet Victor (name)</small>
+</form>
+<hr>
+</body>
+</html>
+
+   <script src="/js/httprequest.js"></script>
+   <script src="/js/getstatus.js"></script>
+
+<iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
