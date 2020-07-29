@@ -21,8 +21,6 @@ app = Flask(__name__, static_url_path='', static_folder='resources/webstuff/stat
 
 args = anki_vector.util.parse_command_args()
 
-serialnumber = "00e20145"
-
 
 @app.route('/api/say')
 def say_text():
@@ -118,7 +116,7 @@ def main_page():
     return render_template('index.html')
 
 @app.route('/api/say/', methods=['POST'])
-def my_form_post():
+def say_text_post():
     text = request.form['text']
     processed_text = text.upper()
     if not processed_text:
@@ -129,6 +127,28 @@ def my_form_post():
 
     return "executed"
 
+@app.route('/api/extras/chatterbot', methods=['POST'])
+def chatterbot():
+    from chatterbot import ChatBot
+    from chatterbot.trainers import ChatterBotCorpusTrainer
+    chatbot = ChatBot("Vector")
+    trainer = ChatterBotCorpusTrainer(chatbot)
+    trainer.train(
+        "chatterbot.corpus.english"
+    )
+    text = request.form['text']
+    processed_text = text.upper()
+    if not processed_text:
+        return "text required"
+
+    chatter_response = chatbot.get_response(processed_text)
+
+    parsed_response = f'"{chatter_response}"'
+
+    with anki_vector.Robot(args.serial) as robot:
+        robot.behavior.say_text(parsed_response)
+
+    return 'executed'
 
 @app.route('/api/locale/frFR', methods=['POST'])
 def locale_french():
