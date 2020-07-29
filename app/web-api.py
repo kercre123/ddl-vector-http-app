@@ -20,7 +20,7 @@ try:
 except ImportError:
     sys.exit("Cannot import from PIL: Do `pip3 install --user Pillow` to install")
 
-app = Flask(__name__, static_url_path='/static')
+app = Flask(__name__, static_url_path='', static_folder='resources/webstuff/static', template_folder='resources/webstuff/templates')
 
 args = anki_vector.util.parse_command_args()
 
@@ -72,7 +72,7 @@ def set_volume(level):
     with anki_vector.Robot(args.serial) as robot:
         robot.audio.set_master_volume(levels[int(level)])
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "volumefacepics", pic_labels[int(level)] + ".jpg")
+        image_path = os.path.join(current_directory, "resources", "volumefacepics", pic_labels[int(level)] + ".jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -524,7 +524,7 @@ def locale_french():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.change_locale(locale='fr_FR')
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "localefacepics", "fr_FR.jpg")
+        image_path = os.path.join(current_directory, "resources", "localefacepics", "fr_FR.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -537,7 +537,7 @@ def locale_japanese():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.change_locale(locale='ja_JP')
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "localefacepics", "ja_JP.jpg")
+        image_path = os.path.join(current_directory, "resources", "localefacepics", "ja_JP.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -551,7 +551,7 @@ def locale_german():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.change_locale(locale='de_DE')
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "localefacepics", "de_DE.jpg")
+        image_path = os.path.join(current_directory, "resources", "localefacepics", "de_DE.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -564,7 +564,7 @@ def locale_englishus():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.change_locale(locale='en_US')
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "localefacepics", "en_US.jpg")
+        image_path = os.path.join(current_directory, "resources", "localefacepics", "en_US.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -594,7 +594,7 @@ def button_alexa():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'button_wakeword':1})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "alexab.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "alexab.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -607,7 +607,7 @@ def button_vector():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'button_wakeword':0})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "heyvectorb.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "heyvectorb.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -620,7 +620,7 @@ def temp_celcius():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'temp_is_fahrenheit':0})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "tempc.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "tempc.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -633,7 +633,7 @@ def temp_fahrenheit():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'temp_is_fahrenheit':1})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "tempf.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "tempf.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -688,7 +688,7 @@ def unit_metric():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'dist_is_metric':1})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "metric.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "metric.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -701,7 +701,7 @@ def unit_imperial():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'dist_is_metric':0})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "imperial.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "imperial.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -717,7 +717,7 @@ def location_string():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'default_location':str(text)})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "location.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "location.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -733,7 +733,7 @@ def time_zone():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'time_zone':str(text)})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "timezone.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "timezone.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -746,7 +746,7 @@ def time_24():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'clock_24_hour':1})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "24hour.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "24hour.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
@@ -759,7 +759,7 @@ def time_12():
     with anki_vector.Robot(args.serial) as robot:
         robot.behavior.update_settings(settings={'clock_24_hour':0})
         current_directory = os.path.dirname(os.path.realpath(__file__))
-        image_path = os.path.join(current_directory, "settingsfacepics", "12hour.jpg")
+        image_path = os.path.join(current_directory, "resources", "settingsfacepics", "12hour.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         duration_s = 3.0
