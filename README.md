@@ -5,6 +5,8 @@ Little Flask app that lets you change some settings in Vector.
 
 `git clone https://github.com/kercre123/ddl-vector-http-app.git`
 
+`pip install -r ddl-vector-http-app/app/requirements.txt`
+
 `py ddl-vector-http-app/app/web-api.py`
 
 (If you have multiple robots, use `--serial`. Example: `py ddl-vector-http-app/app/web-api.py --serial 00e20145')
