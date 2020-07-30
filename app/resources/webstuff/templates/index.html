@@ -6,9 +6,12 @@
 <h1>Vector API</h1>
 <hr>
 <h2>Status</h2>
-<div id="root"></div>
+<div id="vicstatus"></div>
 <button onclick="getVicstatus()">Get Status</button>
-<button onClick="window.location.reload();">Clear (refresh page)</button>
+<hr>
+<h2>Get Image</h2>
+<div id="vicimage"></div>
+<button onclick="getVicimage()">Get Image</button>
 <hr>
 <h2>Set Volume</h2>
 <div class="dropdown">
@@ -133,7 +136,7 @@
 </div>
 <hr>
 <h2>TTS</h2>
-<form method="POST" action="/api/say/" target="hiddenFrame">
+<form method="POST" action="/api/say" target="hiddenFrame">
     <input name="text">
     <input type="submit" placeholder="Put text here">
 </form>
@@ -327,6 +330,12 @@
     <small>Meet Victor (name)</small>
 </form>
 <hr>
+<h2>Extras</h2>
+<form method="POST" action="/api/extras/chatterbot" target="hiddenFrame">
+    <input name="text">
+    <input type="submit" placeholder="Put text here">
+    <small>Chatterbot</small>
+</form>
 </body>
 </html>
 

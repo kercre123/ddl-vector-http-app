@@ -22,19 +22,6 @@ app = Flask(__name__, static_url_path='', static_folder='resources/webstuff/stat
 args = anki_vector.util.parse_command_args()
 
 
-@app.route('/api/say')
-def say_text():
-    text = request.args.get('text')
-
-    if not text:
-        return "text required"
-
-    with anki_vector.Robot(args.serial) as robot:
-        robot.behavior.say_text(text)
-
-    return "executed"
-
-
 @app.route('/api/volume/<level>', methods=['POST'])
 def set_volume(level):
     if int(level) < 0 or int(level) > 4:
@@ -70,14 +57,14 @@ def set_volume(level):
         image_path = os.path.join(current_directory, "resources", "volumefacepics", pic_labels[int(level)] + ".jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         robot.behavior.say_text("Volume set to " + lavels_labels[int(level)])
         time.sleep(duration_s)
 
     return "Volume set to " + lavels_labels[int(level)]
 
-
+# soon to be used
 @app.route('/api/battery')
 def get_battery_state():
     with anki_vector.Robot(args.serial, behavior_control_level=None) as robot:
@@ -104,18 +91,11 @@ def get_battery_state():
     return Response((json.dumps(response)), mimetype='application/json')
 
 
-@app.route('/api/behavior/drive_on_charger')
-def behavior_drive_on_charger():
-    with anki_vector.Robot(args.serial) as robot:
-        robot.behavior.drive_on_charger()
-
-    return "executed"
-
 @app.route('/')
 def main_page():
     return render_template('index.html')
 
-@app.route('/api/say/', methods=['POST'])
+@app.route('/api/say', methods=['POST'])
 def say_text_post():
     text = request.form['text']
     processed_text = text.upper()
@@ -158,7 +138,7 @@ def locale_french():
         image_path = os.path.join(current_directory, "resources", "localefacepics", "fr_FR.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -171,7 +151,7 @@ def locale_japanese():
         image_path = os.path.join(current_directory, "resources", "localefacepics", "ja_JP.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -185,7 +165,7 @@ def locale_german():
         image_path = os.path.join(current_directory, "resources", "localefacepics", "de_DE.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -198,26 +178,23 @@ def locale_englishus():
         image_path = os.path.join(current_directory, "resources", "localefacepics", "en_US.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
 
-@app.route('/api/action/goodnight', methods=['POST'])
-def action_goodnight():
-    with anki_vector.Robot(args.serial) as robot:
-        robot.behavior.drive_on_charger()
-        
-    with anki_vector.Robot(behavior_control_level=None) as robot:
-        robot.behavior.app_intent(intent='intent_system_sleep')
-        
+@app.route('/api/intents/<intent>', methods=['POST'])
+def intent_specific(intent):
+    with anki_vector.Robot(args.serial, behavior_control_level=None) as robot:
+        robot.behavior.app_intent(intent=intent)
     return "executed"
 
-
-@app.route('/api/intents/<intentt>', methods=['POST'])
-def intent_specific(intentt):
-    with anki_vector.Robot(args.serial, behavior_control_level=None) as robot:
-        robot.behavior.app_intent(intent=intentt)
+@app.route('/api/extras/get_image')
+def request_image():
+    with anki_vector.Robot(args.serial) as robot:
+        robot.camera.init_camera_feed()
+        image = robot.camera.latest_image
+        image.raw_image.save("resources/webstuff/static/image/vectorimg.png", "PNG")
     return "executed"
 
 @app.route('/api/settings/button/alexa', methods=['POST'])
@@ -228,7 +205,7 @@ def button_alexa():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "alexab.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -241,7 +218,7 @@ def button_vector():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "heyvectorb.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -254,7 +231,7 @@ def temp_celcius():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "tempc.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -267,7 +244,7 @@ def temp_fahrenheit():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "tempf.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -322,7 +299,7 @@ def unit_metric():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "metric.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -335,7 +312,7 @@ def unit_imperial():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "imperial.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -351,7 +328,7 @@ def location_string():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "location.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -367,7 +344,7 @@ def time_zone():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "timezone.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -380,7 +357,7 @@ def time_24():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "24hour.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -393,7 +370,7 @@ def time_12():
         image_path = os.path.join(current_directory, "resources", "settingsfacepics", "12hour.jpg")
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
-        duration_s = 3.0
+        duration_s = 1.5
         robot.screen.set_screen_with_image_data(screen_data, duration_s)
         time.sleep(duration_s)
     return "executed"
@@ -417,32 +394,7 @@ def animation_list():
         anim_names = robot.anim.anim_list
     return str(json.dumps(anim_names))
 
-
-# @TODO should be post
-@app.route('/api/animation/<animation_id>')
-def animation_play(animation_id):
-    with anki_vector.Robot(args.serial) as robot:
-        robot.anim.play_animation(animation_id)
-    return "executed"
-
-
-@app.route('/api/animation-trigger/list')
-def animation_trigger_list():
-    with anki_vector.AsyncRobot(args.serial, behavior_control_level=None) as robot:
-        anim_trigger_request = robot.anim.load_animation_trigger_list()
-        anim_trigger_request.result()
-        anim_trigger_names = robot.anim.anim_trigger_list
-    return Response((json.dumps(anim_trigger_names)), mimetype='application/json')
-
-
-# @TODO should be post
-@app.route('/api/animation-trigger/<animation_id>')
-def animation_trigger_play(animation_id):
-    with anki_vector.Robot(args.serial) as robot:
-        robot.anim.play_animation_trigger(animation_id)
-    return "executed"
-
-
+# used for debugging
 @app.route('/api/status/')
 def get_status():
     current_states = []
@@ -467,19 +419,6 @@ def get_status():
         if robot.status.is_picked_up: current_states.append("is_picked_up")
         if robot.status.is_robot_moving: current_states.append("is_robot_moving")
     return Response((json.dumps(current_states)), mimetype='application/json')
-
-
-@app.route('/api/fancy/gitlab-build-finished')
-def fancy_gitlab_build_success():
-    robot = anki_vector.Robot(args.serial)
-    robot.connect()
-
-    robot.anim.play_animation_trigger("ReactToTriggerWordOffChargerFrontLeft")
-    robot.screen.set_screen_to_color(anki_vector.color.Color(rgb=[50, 119, 168]), duration_sec=6.0)
-    robot.behavior.say_text("Gitlab build finished, check your app.")
-    robot.disconnect()
-    return "executed"
-
 
 @app.route('/api/fancy/status')
 def fancy_status():
