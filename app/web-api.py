@@ -5,7 +5,7 @@ import sys
 import time
 import webbrowser
 from threading import Timer
-from flask import Flask, request, Response, render_template
+from flask import Flask, request, Response, render_template, send_file
 import anki_vector
 import json
 from anki_vector import audio
@@ -18,6 +18,7 @@ except ImportError:
     sys.exit("Cannot import from PIL: Do `pip3 install --user Pillow` to install")
 
 app = Flask(__name__, static_url_path='', static_folder='resources/webstuff/static', template_folder='resources/webstuff/templates')
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 args = anki_vector.util.parse_command_args()
 
@@ -192,10 +193,43 @@ def intent_specific(intent):
 @app.route('/api/extras/get_image')
 def request_image():
     with anki_vector.Robot(args.serial) as robot:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        image_path = os.path.join(current_directory, "resources", "photofacepics", "takingphoto.jpg")
+        image_file = Image.open(image_path)
+        screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
+        robot.screen.set_screen_with_image_data(screen_data, 2)
         robot.camera.init_camera_feed()
         image = robot.camera.latest_image
         image.raw_image.save("resources/webstuff/static/image/vectorimg.png", "PNG")
+        time.sleep(3)
     return "executed"
+
+@app.route('/api/extras/get_image_processed')
+def request_processed_image():
+    with anki_vector.Robot(args.serial) as robot:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        image_path = os.path.join(current_directory, "resources", "photofacepics", "takingphoto.jpg")
+        image_file = Image.open(image_path)
+        screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
+        robot.screen.set_screen_with_image_data(screen_data, 2)
+        robot.camera.init_camera_feed()
+        image = robot.camera.latest_image
+        image.raw_image.save("resources/webstuff/static/image/vectorimg.png", "PNG")
+        import cv2
+        import matplotlib.pyplot as plt
+        import cvlib as cv
+        from cvlib.object_detection import draw_bbox
+        im = cv2.imread('resources/webstuff/static/image/vectorimg.png')
+        bbox, label, conf = cv.detect_common_objects(im)
+        output_image = draw_bbox(im, bbox, label, conf)
+        plt.imsave("resources/webstuff/static/image/vectorimg.png", output_image)
+        plt.show()
+        time.sleep(4)
+    return "executed"
+
+@app.route('/api/extras/get_latest_image')
+def get_image():
+    return send_file('resources/webstuff/static/image/vectorimg.png', mimetype='image/png')
 
 @app.route('/api/settings/button/alexa', methods=['POST'])
 def button_alexa():

@@ -1,0 +1,6 @@
+chatterbot
+opencv-python
+cvlib
+matplotlib
+tensorflow
+exit
