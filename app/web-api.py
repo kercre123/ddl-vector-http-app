@@ -198,8 +198,7 @@ def request_image():
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         robot.screen.set_screen_with_image_data(screen_data, 2)
-        robot.camera.init_camera_feed()
-        image = robot.camera.latest_image
+        image = robot.camera.capture_single_image()
         image.raw_image.save("resources/webstuff/static/image/vectorimg.png", "PNG")
         time.sleep(3)
     return "executed"
@@ -212,8 +211,7 @@ def request_processed_image():
         image_file = Image.open(image_path)
         screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
         robot.screen.set_screen_with_image_data(screen_data, 2)
-        robot.camera.init_camera_feed()
-        image = robot.camera.latest_image
+        image = robot.camera.capture_single_image()
         image.raw_image.save("resources/webstuff/static/image/vectorimg.png", "PNG")
         import cv2
         import matplotlib.pyplot as plt
@@ -225,6 +223,20 @@ def request_processed_image():
         plt.imsave("resources/webstuff/static/image/vectorimg.png", output_image)
         plt.show()
         time.sleep(4)
+    return "executed"
+
+@app.route('/api/extras/get_image_v_processed')
+def request_v_processed_image():
+    with anki_vector.Robot(args.serial) as robot:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        image_path = os.path.join(current_directory, "resources", "photofacepics", "takingphoto.jpg")
+        image_file = Image.open(image_path)
+        screen_data = anki_vector.screen.convert_image_to_screen_data(image_file)
+        robot.screen.set_screen_with_image_data(screen_data, 2)
+        image = robot.camera.capture_single_image()
+        annotated_image = image.annotate_image()
+        annotated_image.save("resources/webstuff/static/image/vectorimg.png", "PNG")
+        time.sleep(3)
     return "executed"
 
 @app.route('/api/extras/get_latest_image')
