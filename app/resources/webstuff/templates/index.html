@@ -1,21 +1,56 @@
+<!DOCTYPE HTML>
 <html>
-  <head>
+	<head>
+		<title>Vector Discord Bot</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-  </head>
-<body>
-<h1>Vector API</h1>
-<hr>
-<h2>Status</h2>
-<div id="vicstatus"></div>
-<button onclick="getVicstatus()">Get Status</button>
-<hr>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Header -->
+					<header id="header" class="alt">
+						<span class="logo"><img src="images/logo.png" alt="" height="100" width="100"/></span>
+						<h1>Vector API</h1>
+					</header>
+
+				<!-- Nav -->
+					<nav id="nav">
+						<ul>
+							<li><a href="#first" class="active">Get Image</a></li>
+							<li><a href="#second">Settings</a></li>
+              <li><a href="#third">TTS</a></li>
+              <li><a href="#fourth">Actions</a></li>
+              <li><a href="#fifth">Blackjack</a></li>
+              <li><a href="#sixth">App Intents</a></li>
+              <li><a href="#seventh">Extras</a></li>
+						</ul>
+					</nav>
+
+				<!-- Main -->
+					<div id="main">
+
+						<!-- First Section -->
+							<section id="first" class="main special">
+								<header class="major">
 <h2>Get Image</h2>
 <div id="vicimagestatus"></div>
 <div id="vicimage"></div>
 <button onclick="getVicimage()">Get Image</button>
 <button onclick="getVicimageprocessed()">Get CV Processed Image</button>
 <button onclick="getVicvimageprocessed()">Get Vector Processed Image</button>
-<hr>
+
+								</header>
+							</section>
+
+						<!-- Second Section -->
+							<section id="second" class="main special">
+								<header class="major">
 <h2>Set Volume</h2>
 <div class="dropdown">
   <button class="dropbtn">Hover Over This</button>
@@ -137,13 +172,22 @@
   </ul>
   </div>
 </div>
-<hr>
+							</section>
+
+            <!-- First Section -->
+              <section id="third" class="main special">
+                <header class="major">
 <h2>TTS</h2>
 <form method="POST" action="/api/say" target="hiddenFrame">
     <input name="text">
     <input type="submit" placeholder="Put text here">
 </form>
-<hr>
+
+                </header>
+              </section>
+
+              <section id="fourth" class="main special">
+                <header class="major">
 <h2>Actions</h2>
 <form method="POST" action="/api/intents/explore_start" target="hiddenFrame">
   <button type="submit">Explore Start</button>
@@ -157,7 +201,12 @@
 <form method="POST" action="/api/intents/goodnight" target="hiddenFrame">
   <button type="submit">Goodnight</button>
 </form>
-<hr>
+
+                </header>
+              </section>
+
+              <section id="fifth" class="main special">
+                <header class="major">
 <h2>BlackJack</h2>
 <form method="POST" action="/api/intents/play_blackjack" target="hiddenFrame">
   <button type="submit">Play Blackjack</button>
@@ -174,7 +223,11 @@
 <form method="POST" action="/api/intents/negative" target="hiddenFrame">
   <button type="submit">Don't Play Again</button>
 </form>
-<hr>
+                </header>
+              </section>
+
+              <section id="sixth" class="main special">
+                <header class="major">
 <h2>All App Intents</h2>
 <div class="dropdown">
   <button class="dropbtn">Hover Over This</button>
@@ -332,17 +385,42 @@
     <input type="submit" placeholder="Put text here">
     <small>Meet Victor (name)</small>
 </form>
-<hr>
+                </header>
+              </section>
+
+              <section id="seventh" class="main special">
+                <header class="major">
 <h2>Extras</h2>
 <form method="POST" action="/api/extras/chatterbot" target="hiddenFrame">
     <input name="text">
     <input type="submit" placeholder="Put text here">
     <small>Chatterbot</small>
 </form>
-</body>
-</html>
 
+                </header>
+              </section>
+
+					</div>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<p class="copyright">&copy; Wire.</p>
+					</footer>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
    <script src="/js/httprequest.js"></script>
    <script src="/js/getstatus.js"></script>
 
 <iframe name="hiddenFrame" width="0" height="0" border="0" style="display: none;"></iframe>
+
+	</body>
+</html>
